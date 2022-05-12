@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.todo.todoWeb.mapper.TodoMapper">
-<insert id="createTodo">
-insert into todo values (#{id},#{userId},#{title},#{done})</insert>
+	<insert id="createTodo">
+		insert into todo values
+		(#{id},#{userId},#{title},#{done})
+	</insert>
+	<select id="selectAllTodo" resultType="TodoDTO">
+		select * from todo where
+		id=#{id}
+	</select>
+	<update id="updateTodo">
+		update todo
+		set userId=#{userId}, title=#{title}
+		,done=#{done}
+		where id=#{id}
+	</update>
+	<delete id="deleteTodo">
+		delete from todo where id=#{id}
+	</delete>
 </mapper>
+

@@ -1,10 +1,14 @@
 package com.todo.todoWeb.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,15 +32,25 @@ public class TodoController {
 	}
 	
 	@PostMapping("/")
-	@ResponseBody
-	public ResponseEntity<TodoDTO> createTodo(@RequestBody TodoDTO todo) throws Exception {
+	public ResponseEntity<?> createTodo(@RequestBody TodoDTO todo) throws Exception {
 		todoService.createTodo(todo);
-		log.warn("haha");
+		log.info("haha");
 		return new ResponseEntity<TodoDTO>(HttpStatus.OK);
 	}
-	@GetMapping("/b")
-	@ResponseBody
-	public String hi2() {
-		return"haha2";
+	@GetMapping("/")
+	public ResponseEntity<?> retrieveTodoList() throws Exception{
+		String temporalid ="abc";
+		List<TodoDTO> response = todoService.retrieve(temporalid);
+		return ResponseEntity.ok().body(response);
+	}
+	@PutMapping("/")
+	public ResponseEntity<?> updateTodoList(@RequestBody TodoDTO todo) throws Exception{
+		todoService.updateTodo(todo);
+		return new ResponseEntity<TodoDTO>(HttpStatus.OK);
+	}
+	@DeleteMapping("/")
+	public ResponseEntity<?> deleteTodoList() throws Exception{
+		todoService.deleteTodo("1234");
+		return new ResponseEntity<TodoDTO>(HttpStatus.OK);
 	}
 }
